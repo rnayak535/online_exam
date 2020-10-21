@@ -28,6 +28,11 @@
   <link rel="stylesheet" href="{{ url('public/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <!-- jQuery -->
+<script src="{{ url('public/assets/plugins/jquery/jquery.min.js') }}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{ url('public/assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -240,10 +245,7 @@
 
 @yield('content')
 
-<!-- jQuery -->
-<script src="{{ url('public/assets/plugins/jquery/jquery.min.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ url('public/assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)
@@ -266,6 +268,8 @@
 <script src="{{ url('public/assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 <!-- Summernote -->
 <script src="{{ url('public/assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
+<!-- Custom js file -->
+<script src="{{ url('public/assets/js/custom.js') }}"></script>
 
 <!-- DataTables -->
 <script src="{{ url('public/assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
