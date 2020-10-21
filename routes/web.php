@@ -24,3 +24,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/admin', [App\Http\Controllers\admin::class, 'index']);
 Route::get('/admin/exam_category', [App\Http\Controllers\admin::class, 'examCategory']);
 Route::post('/admin/add_new_category', [App\Http\Controllers\admin::class, 'addNewCategory']);
+Route::get('/admin/delete_category/{id}', [App\Http\Controllers\admin::class, 'deleteCategory']);

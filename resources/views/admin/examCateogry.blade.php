@@ -43,12 +43,17 @@
                         <th>Action</th>
                     </thead>
                     <tbody>
+                      @foreach($category as $key => $singleCategory)
                         <tr>
-                            <td>1</td>
-                            <td>Rajesh</td>
-                            <td>Active</td>
-                            <td></td>
+                            <td><?=$key+1;?></td>
+                            <td><?=$singleCategory["name"];?></td>
+                            <td><input type="checkbox" name="status"></td>
+                            <td>
+                              <a href="javascript:void(0);" class="btn btn-warning">Edit</a>
+                              <a href="{{ url('admin/delete_category/'.$singleCategory['id']) }}" class="btn btn-danger">Delete</a>
+                            </td>
                         </tr>
+                      @endforeach
                     </tbody>
                 </table>
               </div>

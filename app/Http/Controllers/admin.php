@@ -14,7 +14,9 @@ class admin extends Controller
    }
 
    public function examCategory(){
-       return view('admin.examCateogry');
+        $data=array();
+        $data["category"] = app_category::orderBy('id','DESC')->get()->toArray();
+        return view('admin.examCateogry', $data);
    }
 
    public function addNewCategory(Request $request){
@@ -31,5 +33,11 @@ class admin extends Controller
             $array = array('status'=>'false', 'message'=>$validator->error()->all(), 'reloadUrl'=>url('admin/exam_category'));
         } 
     echo json_encode($array);
+   }
+
+   public function deleteCategory($id){
+       $category = app_category::where('id',$id)->get()->first();
+       $category->delete();
+       return redirect(url('admin/exam_category'));
    }
 }
