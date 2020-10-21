@@ -23,3 +23,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/admin', [App\Http\Controllers\admin::class, 'index']);
 Route::get('/admin/exam_category', [App\Http\Controllers\admin::class, 'examCategory']);
+Route::post('/admin/add_new_category', [App\Http\Controllers\admin::class, 'addNewCategory']);

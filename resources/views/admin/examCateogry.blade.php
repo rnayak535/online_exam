@@ -74,6 +74,7 @@
               <form id="addNewCategory" method="post" action="{{ url('admin/add_new_category') }}">
                 <div class="form-group">
                   <label>Category Name <span class="text-danger">*</span></label>
+                  {{ csrf_field() }}
                   <input name="name" type="text" class="form-control" placeholder="Enter Category Name" required="required">
                 </div>
                 <div class="form-group">
@@ -85,12 +86,11 @@
         </div>
       </div>
 
-      <!-- Javascript -->
+  </div>
+
+<!-- Javascript -->
 <script>
 
 </script>
 
-  </div>
-
-
-  @endsection
+@endsection
