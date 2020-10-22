@@ -29,7 +29,6 @@ $(document).on('submit', '#addNewCategory', function(event){
 
 // Edit Category submit 
 $(document).on('submit', '#editCategoryForm', function(event){
-  alert("hlo");
   event.preventDefault();
     var surl = $(this).attr("action");
     var formData = new FormData(this);
@@ -47,7 +46,6 @@ $(document).on('submit', '#editCategoryForm', function(event){
         alert("Category updated successfully");
         // console.log(response);
         response = JSON.parse(response);
-        alert(response.reloadUrl);
         window.location.href = response.reloadUrl;
       },
       error: function(response){

@@ -47,7 +47,7 @@
                         <tr>
                             <td><?=$key+1;?></td>
                             <td><?=$singleCategory["name"];?></td>
-                            <td><input type="checkbox" name="status"></td>
+                            <td><input type="checkbox" <?=($singleCategory["status"]=='1')?'checked':'';?> onclick="changeCategoryStatus(<?=$singleCategory['id'];?>);" name="status"></td>
                             <td>
                               <a href="javascript:void(0);" data-toggle="modal" data-target="#editCategory" class="btn btn-warning" onclick="getCategory(<?=$singleCategory['id'];?>);">Edit</a>
                               <a href="{{ url('admin/delete_category/'.$singleCategory['id']) }}" class="btn btn-danger">Delete</a>
@@ -113,6 +113,7 @@
 
 <!-- Javascript -->
 <script>
+
   function getCategory(categoryId){
     var surl = "{{ url('admin/get_category') }}";
     $.ajax({
@@ -124,6 +125,26 @@
       },
       success: function(response){
         $("#editCategoryBody").html(response);
+      },
+      error: function(response){
+        alert("Oops please try after some time!");
+        window.location.href = "{{ url('admin/exam_category') }}";
+      }
+    });
+  }
+
+  // Change category status
+  function changeCategoryStatus(categoryId){
+    //BASE_URL is defined in master.blade.php
+    $.ajax({
+      type: 'GET',
+      url: BASE_URL+"/admin/change_status",
+      data: "categoryId="+categoryId,
+      beforeSend: function(){
+        
+      },
+      success: function(response){
+        alert("Status Changed successfully.");
       },
       error: function(response){
         alert("Oops please try after some time!");

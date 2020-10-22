@@ -62,4 +62,15 @@ class admin extends Controller
         }
         echo json_encode($array);
    }
+
+   public function changeCategoryStatus(Request $request){
+        $oCategory = app_category::where('id', $request->categoryId)->get()->first();
+        if($oCategory->status == '1'){
+            $status = 0;
+        }else{
+            $status = 1;
+        }
+        $oCategory->status = $status;
+        $oCategory->update();
+   }
 }
