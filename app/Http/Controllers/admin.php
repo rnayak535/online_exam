@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\app_category;
+use App\Models\app_exam_master;
 use Validator;
 
 class admin extends Controller
@@ -72,5 +73,26 @@ class admin extends Controller
         }
         $oCategory->status = $status;
         $oCategory->update();
+   }
+
+   public function manageExam(){
+       $oCategory = app_category::orderBY('id', 'DESC')->where('status', '1')->get()->toArray();
+       $data["category"] = $oCategory;
+       return view('admin.manageExam', $data);
+   }
+
+   public function addExam(Request $request){
+        $validator = Validator::make($request->all(), ['title'=>'required','exam_date'=>'required','categoryId'=>'required']);
+        if($validator->passes()){
+            $oExam = new app_exam_master();
+            $oExam->title = $request->title;
+            $oExam->exam_date = $request->exam_date;
+            $oExam->category = $request->categoryId;
+            $oExam->save();
+            $array = array('status'=>'failed', 'message'=>'Exam added successfully.', 'reloadUrl'=>url('admin/manage_exam'));
+        }else{
+            $array = array('status'=>'failed', 'message'=>$validator->error()->all(), 'reloadUrl'=>url('admin/manage_exam'));
+        }
+        echo json_encode($array);
    }
 }

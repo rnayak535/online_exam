@@ -58,3 +58,33 @@ $(document).on('submit', '#editCategoryForm', function(event){
     
 });
 
+// Multiple form submit 
+$(document).on('submit', '.ajax_form_submit', function(event){
+  event.preventDefault();
+    var surl = $(this).attr("action");
+    var formData = new FormData(this);
+    $.ajax({
+      type: 'POST',
+      url: surl,
+      contentType: false,
+      cache: false,
+      processData:false,
+      data: formData,
+      beforeSend: function(){
+
+      },
+      success: function(response){
+        // console.log(response);
+        response = JSON.parse(response);
+        alert(response.message);
+        window.location.href = response.reloadUrl;
+      },
+      error: function(response){
+        // console.log(response);
+        response = JSON.parse(response);
+        alert(response.message);
+        window.location.href = response.reloadUrl;
+      }
+    });
+    
+});

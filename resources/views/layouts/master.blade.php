@@ -193,6 +193,12 @@
               <p>Category</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ url('admin/manage_exam') }}" class="nav-link">
+              <i class="nav-icon fas fa-tasks" aria-hidden="true"></i>
+              <p>Manage Exam</p>
+            </a>
+          </li>
 
           <!-- <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link active">
