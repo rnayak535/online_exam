@@ -40,4 +40,26 @@ class admin extends Controller
        $category->delete();
        return redirect(url('admin/exam_category'));
    }
+
+   public function getCategory(Request $request){
+        $category = app_category::where('id',$request->categoryId)->get()->first();
+        $data=array();
+        $data["category"] =  $category;
+        return view('admin.editCategoryAjax',$data);
+   }
+
+   public function editCategory(Request $request){
+
+        $validator = Validator::make($request->all(), ['name'=>'required']);
+
+        if($validator->passes()){
+            $oCategory = app_category::where('id',$request->EditcategoryId)->get()->first();
+            $oCategory->name = $request->name;
+            $oCategory->update();
+            $array = array('status'=>'success', 'message'=>'Category Updated successfully', 'reloadUrl'=>url('admin/exam_category'));
+        }else{
+            $array = array('status'=>'false', 'message'=>$validator->error()->all(), 'reloadUrl'=>url('admin/exam_category'));
+        }
+        echo json_encode($array);
+   }
 }

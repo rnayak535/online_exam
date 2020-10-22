@@ -25,3 +25,5 @@ Route::get('/admin', [App\Http\Controllers\admin::class, 'index']);
 Route::get('/admin/exam_category', [App\Http\Controllers\admin::class, 'examCategory']);
 Route::post('/admin/add_new_category', [App\Http\Controllers\admin::class, 'addNewCategory']);
 Route::get('/admin/delete_category/{id}', [App\Http\Controllers\admin::class, 'deleteCategory']);
+Route::get('/admin/get_category', [App\Http\Controllers\admin::class, 'getCategory']);
+Route::post('/admin/edit_category', [App\Http\Controllers\admin::class, 'editCategory']);

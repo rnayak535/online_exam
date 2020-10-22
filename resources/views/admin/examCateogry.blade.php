@@ -49,7 +49,7 @@
                             <td><?=$singleCategory["name"];?></td>
                             <td><input type="checkbox" name="status"></td>
                             <td>
-                              <a href="javascript:void(0);" class="btn btn-warning">Edit</a>
+                              <a href="javascript:void(0);" data-toggle="modal" data-target="#editCategory" class="btn btn-warning" onclick="getCategory(<?=$singleCategory['id'];?>);">Edit</a>
                               <a href="{{ url('admin/delete_category/'.$singleCategory['id']) }}" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
@@ -66,6 +66,7 @@
     <!-- /.content -->
 
       <!-- Modal -->
+      <!-- Add Category Modal -->
       <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -91,11 +92,45 @@
         </div>
       </div>
 
+      <!-- Edit Category modal -->
+      <div class="modal fade" id="editCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabeledit">Edit Category</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="editCategoryBody">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
   </div>
 
 <!-- Javascript -->
 <script>
-
+  function getCategory(categoryId){
+    var surl = "{{ url('admin/get_category') }}";
+    $.ajax({
+      type: 'GET',
+      url: surl,
+      data: "categoryId="+categoryId,
+      beforeSend: function(){
+        $("#editCategoryBody").html('<div class="text-center"><i class="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i></div>');
+      },
+      success: function(response){
+        $("#editCategoryBody").html(response);
+      },
+      error: function(response){
+        alert("Oops please try after some time!");
+        window.location.href = "{{ url('admin/exam_category') }}";
+      }
+    });
+  }
 </script>
 
 @endsection
