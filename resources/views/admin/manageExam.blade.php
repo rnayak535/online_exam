@@ -56,7 +56,7 @@
                         <td>{{ date('jS, F Y', strtotime($singleExam["exam_date"])) }}</td>
                         <td><input type="checkbox" <?=($singleExam["status"]=='1')?'checked':'';?> name="status" onclick="changeExamStatus('<?=$singleExam['id']?>');"></td>
                         <td>
-                          <a href="javascript:void(0);" class="btn btn-warning" data-toggle="modal" data-target="#editExam">Edit</a>
+                          <a href="javascript:void(0);" class="btn btn-warning" data-toggle="modal" data-target="#editExam" onclick="getEditExamModal('<?=$singleExam['id']?>');">Edit</a>
                           <a href="javascript:void(0);" class="btn btn-danger" onclick="deleteExam('<?=$singleExam['id'];?>');">Delete</a>
                         </td>
                       </tr>
@@ -133,29 +133,7 @@
               </button>
             </div>
             <div class="modal-body" id="edit-exam-body">
-              <form id="" method="post" action="{{ url('admin/edit_exam') }}" class="ajax_form_submit">
-                <div class="form-group">
-                  <label>Enter Title <span class="text-danger">*</span></label>
-                  {{ csrf_field() }}
-                  <input name="title" type="text" class="form-control" placeholder="Enter Exam Name" required="required">
-                </div>
-                <div class="form-group">
-                  <label>Select Exam Date <span class="text-danger">*</span></label>
-                  <input name="exam_date" type="date" class="form-control" required="required">
-                </div>
-                <div class="form-group">
-                  <label>Select Exam Category <span class="text-danger">*</span></label>
-                  <select name="categoryId" id="" required="required" class="form-control">
-                    <option value="">Select Category</option>
-                    @foreach($category as $singleCategory)
-                    <option value="{{ $singleCategory['id'] }}">{{ $singleCategory['name'] }}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-              </form>
+              
             </div>
           </div>
         </div>
@@ -206,6 +184,25 @@
           });
        }
        
+    }
+
+    function getEditExamModal(examId){
+      //BASE_URL is defined in master.blade.php
+      $.ajax({
+        type: 'GET',
+        url: BASE_URL+"/admin/get_exam",
+        data: "examId="+examId,
+        beforeSend: function(){
+          $("#edit-exam-body").html('<div class="text-center"><i class="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i></div>');
+        },
+        success: function(response){
+          $("#edit-exam-body").html(response);
+        },
+        error: function(response){
+          alert("Oops please try after some time!");
+          window.location.href = "{{ url('admin/manage_exam') }}";
+        }
+      });
     }
 </script>
 

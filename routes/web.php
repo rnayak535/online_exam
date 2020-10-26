@@ -32,3 +32,4 @@ Route::get('/admin/manage_exam', [App\Http\Controllers\admin::class, 'manageExam
 Route::post('/admin/add_new_exam', [App\Http\Controllers\admin::class, 'addExam']);
 Route::get('/admin/change_exam_status', [App\Http\Controllers\admin::class, 'changeExamStatus']);
 Route::get('/admin/delete_exam', [App\Http\Controllers\admin::class, 'deleteExam']);
+Route::get('/admin/get_exam', [App\Http\Controllers\admin::class, 'getExam']);

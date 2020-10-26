@@ -114,4 +114,13 @@ class admin extends Controller
         $oApp_exam_master = app_exam_master::where('id', $request->examId)->get()->first();
         $oApp_exam_master->delete();
    }
+
+//    Edit exam modal
+   public function getExam(Request $request){
+        $exams = app_exam_master::where('id', $request->examId)->get()->first();
+        $data["exams"] = $exams;
+        $oCategory = app_category::orderBY('id', 'DESC')->where('status', '1')->get()->toArray();
+        $data["category"] = $oCategory;
+        return view('admin.examAjax', $data);
+   }
 }
