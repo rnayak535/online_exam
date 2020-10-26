@@ -31,7 +31,7 @@ class admin extends Controller
             $array = array('status'=>'true', 'message'=>'success', 'reloadUrl'=>url('admin/exam_category'));
         }
         else{
-            $array = array('status'=>'false', 'message'=>$validator->error()->all(), 'reloadUrl'=>url('admin/exam_category'));
+            $array = array('status'=>'false', 'message'=>$validator->errors()->all(), 'reloadUrl'=>url('admin/exam_category'));
         } 
     echo json_encode($array);
    }
@@ -57,7 +57,7 @@ class admin extends Controller
             $oCategory = app_category::where('id',$request->EditcategoryId)->get()->first();
             $oCategory->name = $request->name;
             $oCategory->update();
-            $array = array('status'=>'success', 'message'=>'Category Updated successfully', 'reloadUrl'=>url('admin/exam_category'));
+            $array = array('status'=>'true', 'message'=>'Category Updated successfully', 'reloadUrl'=>url('admin/exam_category'));
         }else{
             $array = array('status'=>'false', 'message'=>$validator->error()->all(), 'reloadUrl'=>url('admin/exam_category'));
         }
@@ -77,7 +77,9 @@ class admin extends Controller
 
    public function manageExam(){
        $oCategory = app_category::orderBY('id', 'DESC')->where('status', '1')->get()->toArray();
+       $oApp_exam_master = app_exam_master::select('app_exam_masters.*','app_categories.name as cat_name')->join('app_categories','app_exam_masters.category','=','app_categories.id')->orderBY('id', 'DESC')->get()->toArray();
        $data["category"] = $oCategory;
+       $data["exams"] = $oApp_exam_master;
        return view('admin.manageExam', $data);
    }
 
@@ -88,11 +90,28 @@ class admin extends Controller
             $oExam->title = $request->title;
             $oExam->exam_date = $request->exam_date;
             $oExam->category = $request->categoryId;
+            $oExam->status = 1;
             $oExam->save();
-            $array = array('status'=>'failed', 'message'=>'Exam added successfully.', 'reloadUrl'=>url('admin/manage_exam'));
+            $array = array('status'=>'true', 'message'=>'Exam added successfully.', 'reloadUrl'=>url('admin/manage_exam'));
         }else{
-            $array = array('status'=>'failed', 'message'=>$validator->error()->all(), 'reloadUrl'=>url('admin/manage_exam'));
+            $array = array('status'=>'false', 'message'=>$validator->errors()->all(), 'reloadUrl'=>url('admin/manage_exam'));
         }
         echo json_encode($array);
+   }
+
+   public function changeExamStatus(Request $request){
+        $oApp_exam_master = app_exam_master::where('id', $request->examId)->get()->first();
+        if($oApp_exam_master->status == '1'){
+            $status = 0;
+        }else{
+            $status = 1;
+        }
+        $oApp_exam_master->status = $status;
+        $oApp_exam_master->update();
+   }
+
+   public function deleteExam(Request $request){
+        $oApp_exam_master = app_exam_master::where('id', $request->examId)->get()->first();
+        $oApp_exam_master->delete();
    }
 }

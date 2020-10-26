@@ -77,7 +77,10 @@ $(document).on('submit', '.ajax_form_submit', function(event){
         // console.log(response);
         response = JSON.parse(response);
         alert(response.message);
-        window.location.href = response.reloadUrl;
+        if(response.status != 'false'){
+           window.location.href = response.reloadUrl;
+        }
+       
       },
       error: function(response){
         // console.log(response);

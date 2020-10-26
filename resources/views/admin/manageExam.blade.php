@@ -37,23 +37,40 @@
               <div class="card-body">
                 <table class="table table-bordered table-striped table-hover datatable">
                     <thead>
+                      <tr>
                         <th>#</th>
                         <th>Title</th>
                         <th>Category</th>
                         <th>Exam Date</th>
                         <th>Status</th>
                         <th>Action</th>
+                      </tr>
                     </thead>
+                    
                     <tbody>
-
+                    @foreach($exams as $key => $singleExam)
+                      <tr>
+                        <td>{{ $key+1 }}</td>
+                        <td>{{ $singleExam["title"] }}</td>
+                        <td>{{ $singleExam["cat_name"] }}</td>
+                        <td>{{ date('jS, F Y', strtotime($singleExam["exam_date"])) }}</td>
+                        <td><input type="checkbox" <?=($singleExam["status"]=='1')?'checked':'';?> name="status" onclick="changeExamStatus('<?=$singleExam['id']?>');"></td>
+                        <td>
+                          <a href="javascript:void(0);" class="btn btn-warning" data-toggle="modal" data-target="#editExam">Edit</a>
+                          <a href="javascript:void(0);" class="btn btn-danger" onclick="deleteExam('<?=$singleExam['id'];?>');">Delete</a>
+                        </td>
+                      </tr>
+                    @endforeach
                     </tbody>
                     <tfoot>
+                      <tr>
                         <th>#</th>
                         <th>Title</th>
                         <th>Category</th>
                         <th>Exam Date</th>
                         <th>Status</th>
                         <th>Action</th>
+                      </tr>
                     </tfoot>
                 </table>
               </div>
@@ -105,12 +122,91 @@
         </div>
       </div>
 
+      <!-- Edit exam modal -->
+      <div class="modal fade" id="editExam" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Update Exam</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="edit-exam-body">
+              <form id="" method="post" action="{{ url('admin/edit_exam') }}" class="ajax_form_submit">
+                <div class="form-group">
+                  <label>Enter Title <span class="text-danger">*</span></label>
+                  {{ csrf_field() }}
+                  <input name="title" type="text" class="form-control" placeholder="Enter Exam Name" required="required">
+                </div>
+                <div class="form-group">
+                  <label>Select Exam Date <span class="text-danger">*</span></label>
+                  <input name="exam_date" type="date" class="form-control" required="required">
+                </div>
+                <div class="form-group">
+                  <label>Select Exam Category <span class="text-danger">*</span></label>
+                  <select name="categoryId" id="" required="required" class="form-control">
+                    <option value="">Select Category</option>
+                    @foreach($category as $singleCategory)
+                    <option value="{{ $singleCategory['id'] }}">{{ $singleCategory['name'] }}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
   </div>
 
 <!-- Javascript -->
 <script>
-    
+    function changeExamStatus(examId){
+      //BASE_URL is defined in master.blade.php
+      $.ajax({
+        type: 'GET',
+        url: BASE_URL+"/admin/change_exam_status",
+        data: "examId="+examId,
+        beforeSend: function(){
+          
+        },
+        success: function(response){
+          alert("Exam Status Changed successfully.");
+        },
+        error: function(response){
+          alert("Oops please try after some time!");
+          window.location.href = "{{ url('admin/manage_exam') }}";
+        }
+      });
+    }
+    // Delete Exam
+    function deleteExam(examId){
+       //BASE_URL is defined in master.blade.php
+       var confirmit = confirm("Are you sure to delete this exam!");
+       if(confirmit){
+            $.ajax({
+            type: 'GET',
+            url: BASE_URL+"/admin/delete_exam",
+            data: "examId="+examId,
+            beforeSend: function(){
+              
+            },
+            success: function(response){
+              alert("Exam deleted successfully.");
+              window.location.href = "{{ url('admin/manage_exam') }}";
+            },
+            error: function(response){
+              alert("Oops please try after some time!");
+              window.location.href = "{{ url('admin/manage_exam') }}";
+            }
+          });
+       }
+       
+    }
 </script>
 
 @endsection
