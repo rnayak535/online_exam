@@ -71,23 +71,23 @@ $(document).on('submit', '.ajax_form_submit', function(event){
       processData:false,
       data: formData,
       beforeSend: function(){
-        alert("hli");
-        // alert($('button[type="submit"]').val());
+        var submitText = $(this).find(':submit').text();
+        submitText = submitText+'<i class="fa fa-spinner fa-spin ml-1"></i>';
+        $(this).find(':submit').html(submitText);      
       },
       success: function(response){
         // console.log(response);
-        // response = JSON.parse(response);
-        // alert(response.message);
-        // if(response.status != 'false'){
-        //    window.location.href = response.reloadUrl;
-        // }
-       
+        response = JSON.parse(response);
+        alert(response.message);
+        if(response.status != 'false'){
+           window.location.href = response.reloadUrl;
+        } 
       },
       error: function(response){
         // console.log(response);
-        // response = JSON.parse(response);
-        // alert(response.message);
-        // window.location.href = response.reloadUrl;
+        response = JSON.parse(response);
+        alert(response.message);
+        window.location.href = response.reloadUrl;
       }
     });
     

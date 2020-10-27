@@ -125,7 +125,7 @@
                   <input type="password" name="password" placeholder="Enter password" required="required" class="form-control">
                 </div>
                 <div class="form-group">
-                  <button type="submit" class="btn btn-primary">Add <i class="fa fa-spinner fa-spin ml-1"></i></button>
+                  <button type="submit" class="btn btn-primary">Add </button>
                 </div>
               </form>
             </div>
