@@ -123,4 +123,26 @@ class admin extends Controller
         $data["category"] = $oCategory;
         return view('admin.examAjax', $data);
    }
+
+   public function editExam(Request $request){
+        $validator = Validator::make($request->all(), ['title'=>'required','exam_date'=>'required','categoryId'=>'required']);
+        if($validator->passes()){
+            $oApp_exam_master = app_exam_master::where('id', $request->examId)->get()->first();
+            $oApp_exam_master->title = $request->title;
+            $oApp_exam_master->exam_date = $request->exam_date;
+            $oApp_exam_master->category = $request->categoryId;
+            $oApp_exam_master->update();
+            $array = array('status'=>'true', 'message'=>'Exam updated successfully.', 'reloadUrl'=>url('admin/manage_exam'));
+        }else{
+            $array = array('status'=>'false', 'message'=>$validator->errors()->all(), 'reloadUrl'=>url('admin/manage_exam'));
+        }
+        echo json_encode($array);
+   }
+
+//    Manage student section
+   public function manageStudents(){
+        $oApp_exam_master = app_exam_master::where('status', '1')->get()->toArray();
+        $data["exams"] = $oApp_exam_master;
+        return view('admin.manageStudent', $data);
+   }
 }

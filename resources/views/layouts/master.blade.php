@@ -199,6 +199,12 @@
               <p>Manage Exam</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ url('admin/manage_students') }}" class="nav-link">
+              <i class="nav-icon fas fa-users" aria-hidden="true"></i>
+              <p>Students</p>
+            </a>
+          </li>
 
           <!-- <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link active">

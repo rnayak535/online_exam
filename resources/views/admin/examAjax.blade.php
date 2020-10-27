@@ -18,6 +18,7 @@
                   </select>
                 </div>
                 <div class="form-group">
+                  <input type="hidden" name="examId" value="{{ $exams->id }}">
                   <button type="submit" class="btn btn-primary">Save</button>
                 </div>
               </form>

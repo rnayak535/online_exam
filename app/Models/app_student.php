@@ -10,5 +10,5 @@ class app_student extends Model
     use HasFactory;
     protected $table="app_students";
     protected $primaryKey="id";
-    protected $fillable=['name','email','mobile_no','category','exam','password','status'];
+    protected $fillable=['name','email','mobile_no','dob','exam','password','status'];
 }
