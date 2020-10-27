@@ -105,7 +105,7 @@
                 </div>
                 <div class="form-group">
                   <label>Enter Mobile No <span class="text-danger">*</span></label>
-                  <input name="email" type="email" class="form-control" placeholder="Enter mobile number" required="required">
+                  <input name="mobile_no" type="number" class="form-control" placeholder="Enter mobile number" required="required">
                 </div>
                 <div class="form-group">
                   <label>Select DOB <span class="text-danger">*</span></label>
@@ -125,7 +125,7 @@
                   <input type="password" name="password" placeholder="Enter password" required="required" class="form-control">
                 </div>
                 <div class="form-group">
-                  <button type="submit" class="btn btn-primary">Add</button>
+                  <button type="submit" class="btn btn-primary">Add <i class="fa fa-spinner fa-spin ml-1"></i></button>
                 </div>
               </form>
             </div>
