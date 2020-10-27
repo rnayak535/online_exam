@@ -249,6 +249,15 @@
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.0.5
     </div>
+    <div class="float-right d-sm-inline-block mr-2">
+      <button type="submit" class="btn btn-primary" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Logout</button>
+    </div>
+
+     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+      </form>
+    
   </footer>
 
   <!-- Control Sidebar -->
