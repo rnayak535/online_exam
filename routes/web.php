@@ -35,3 +35,4 @@ Route::get('/admin/delete_exam', [App\Http\Controllers\admin::class, 'deleteExam
 Route::get('/admin/get_exam', [App\Http\Controllers\admin::class, 'getExam']);
 Route::post('/admin/edit_exam', [App\Http\Controllers\admin::class, 'editExam']);
 Route::get('/admin/manage_students', [App\Http\Controllers\admin::class, 'manageStudents']);
+Route::post('/admin/add_new_student', [App\Http\Controllers\admin::class, 'addNewStudent']);

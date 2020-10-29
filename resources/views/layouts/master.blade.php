@@ -155,11 +155,13 @@
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+        <div class="float-right d-sm-inline-block mr-2">
+          <button type="submit" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</button>
+        </div>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+          </form>
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -182,59 +184,29 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ url('admin') }}" class="nav-link active">
+            <a href="{{ url('admin') }}" class="nav-link {{ (url()->current()==url('admin'))?'active':'' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('admin/exam_category') }}" class="nav-link">
+            <a href="{{ url('admin/exam_category') }}" class="nav-link {{ (url()->current()==url('admin/exam_category'))?'active':'' }}">
               <i class="nav-icon fas fa-th"></i>
               <p>Category</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('admin/manage_exam') }}" class="nav-link">
+            <a href="{{ url('admin/manage_exam') }}" class="nav-link {{ (url()->current()==url('admin/manage_exam'))?'active':'' }}">
               <i class="nav-icon fas fa-tasks" aria-hidden="true"></i>
               <p>Manage Exam</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ url('admin/manage_students') }}" class="nav-link">
+            <a href="{{ url('admin/manage_students') }}" class="nav-link {{ (url()->current()==url('admin/manage_students'))?'active':'' }}">
               <i class="nav-icon fas fa-users" aria-hidden="true"></i>
               <p>Students</p>
             </a>
           </li>
-
-          <!-- <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v3</p>
-                </a>
-              </li>
-            </ul>
-          </li> -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -249,14 +221,7 @@
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.0.5
     </div>
-    <div class="float-right d-sm-inline-block mr-2">
-      <button type="submit" class="btn btn-primary" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">Logout</button>
-    </div>
-
-     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-        @csrf
-      </form>
+    
     
   </footer>
 

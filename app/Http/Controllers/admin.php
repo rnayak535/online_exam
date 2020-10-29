@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\app_category;
 use App\Models\app_exam_master;
+use App\Models\app_student;
+use Illuminate\Support\Facades\Hash;
 use Validator;
 
 class admin extends Controller
@@ -145,7 +147,28 @@ class admin extends Controller
 //    Manage student section
    public function manageStudents(){
         $oApp_exam_master = app_exam_master::where('status', '1')->get()->toArray();
+        $oapp_student = app_student::where('status', '1')->get()->toArray();
         $data["exams"] = $oApp_exam_master;
+        $data["studentlist"] = $oapp_student;
         return view('admin.manageStudent', $data);
+   }
+
+   public function addNewStudent(Request $request){
+       $validator = Validator::make($request->all(), ['name'=>'required','email'=>'required','mobile_no'=>'required','dob'=>'required','exam'=>'required','password'=>'required']);
+       if($validator->passes()){
+           $oapp_student = new app_student();
+           $oapp_student->name = $request->name;
+           $oapp_student->email = $request->email;
+           $oapp_student->mobile_no = $request->mobile_no;
+           $oapp_student->dob = $request->dob;
+           $oapp_student->exam = $request->exam;
+           $oapp_student->password = Hash::make($request->password);
+           $oapp_student->status = '1';
+           $oapp_student->save();
+           $array = array('status'=>'true', 'message'=>'Student added successfully', 'reloadUrl'=>url('admin/manage_students'));
+       }else{
+           $array = array('status'=>'false', 'message'=>$validator->errors()->all(), 'reloadUrl'=>url('admin/manage_students'));
+       }
+       echo json_encode($array);
    }
 }
