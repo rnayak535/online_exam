@@ -148,7 +148,7 @@ class admin extends Controller
    public function manageStudents(){
         $oApp_exam_master = app_exam_master::where('status', '1')->get()->toArray();
         $data["exams"] = $oApp_exam_master;
-        $data["studentlist"] = app_student::select(['app_students.*','app_exam_masters.title as exam_name','app_exam_masters.exam_date'])->join('app_exam_masters','app_students.exam','=','app_exam_masters.id')->get()->toArray();
+        $data["studentlist"] = app_student::select(['app_students.*','app_exam_masters.title as exam_name','app_exam_masters.exam_date'])->join('app_exam_masters','app_students.exam','=','app_exam_masters.id')->orderBy('id', 'DESC')->get()->toArray();
         return view('admin.manageStudent', $data);
    }
 
@@ -169,5 +169,26 @@ class admin extends Controller
            $array = array('status'=>'false', 'message'=>$validator->errors()->all(), 'reloadUrl'=>url('admin/manage_students'));
        }
        echo json_encode($array);
+   }
+
+   function deleteStudent(Request $request){
+        $oapp_student = app_student::where('id', $request->recordId)->get()->first();
+        if($oapp_student->status == '1'){
+            $status = 0;
+        }else{
+            $status = 1;
+        }
+        $oapp_student->status = $status;
+        $oapp_student->delete();
+        $array = array('status'=>'true', 'message'=>'Student deleted successfully.', 'reloadUrl'=>url('admin/manage_students'));
+        echo json_encode($array);
+   }
+
+   function getStudent(Request $request){
+        $oApp_exam_master = app_exam_master::where('status', '1')->get()->toArray();
+        $data["exams"] = $oApp_exam_master;
+        $oapp_student = app_student::where('id', $request->studentId)->get()->first();
+        $data["student"] = $oapp_student;
+        return view('admin.getStudentAjax', $data);
    }
 }

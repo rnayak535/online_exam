@@ -57,9 +57,12 @@
                         <td>{{ date('jS, F Y', strtotime($singleStudent["dob"])) }}</td>
                         <td>{{ $singleStudent["exam_name"] }}</td>
                         <td>{{ date('jS, F Y', strtotime($singleStudent["exam_date"])) }}</td>
-                        <td>Result</td>
+                        <td>N/A</td>
                         <td><input type="checkbox" name="form-control" name="status" {{ ($singleStudent['status']=='1')?'checked':'' }}></td>
-                        <td>Action</td>
+                        <td>
+                          <a href="javascript:void(0);" class="btn btn-warning" data-toggle="modal" data-target="#editStudent" onclick="getEditModal('{{ $singleStudent['id'] }}');">Edit</a>
+                          <a href="javascript:void(0);" class="btn btn-danger" data-id="{{ $singleStudent['id'] }}" data-url="{{ url('admin/delete_student') }}" data-msg="Are you sure to delete this student!" onclick="deleteOperation(this);">Delete</a>
+                        </td>
                       </tr>
                     @endforeach
                     </tbody>
@@ -138,16 +141,16 @@
       </div>
 
       <!-- Edit exam modal -->
-      <div class="modal fade" id="editExam" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="editStudent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Update Exam</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Update Student Details</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body" id="edit-exam-body">
+            <div class="modal-body" id="edit-student-body">
               
             </div>
           </div>
@@ -158,7 +161,24 @@
 
 <!-- Javascript -->
 <script>
-    
+    function getEditModal(studentId){
+       //BASE_URL is defined in master.blade.php
+       $.ajax({
+        type: 'GET',
+        url: BASE_URL+"/admin/get_student",
+        data: "studentId="+studentId,
+        beforeSend: function(){
+          $("#edit-student-body").html('<div class="text-center"><i class="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i></div>');
+        },
+        success: function(response){
+          $("#edit-student-body").html(response);
+        },
+        error: function(response){
+          alert("Oops please try after some time!");
+          window.location.href = "{{ url('admin/manage_students') }}";
+        }
+      });
+    }
 </script>
 
 @endsection

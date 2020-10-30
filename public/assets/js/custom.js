@@ -60,6 +60,7 @@ $(document).on('submit', '#editCategoryForm', function(event){
 
 // Multiple form submit 
 $(document).on('submit', '.ajax_form_submit', function(event){
+  var form = this;
   event.preventDefault();
     var surl = $(this).attr("action");
     var formData = new FormData(this);
@@ -71,9 +72,7 @@ $(document).on('submit', '.ajax_form_submit', function(event){
       processData:false,
       data: formData,
       beforeSend: function(){
-        var submitText = $(this).find(':submit').text();
-        submitText = submitText+'<i class="fa fa-spinner fa-spin ml-1"></i>';
-        $(this).find(':submit').html(submitText);      
+        $(form).find(':submit').html($(form).find(':submit').text()+'<i class="fa fa-spinner fa-spin ml-1"></i>');      
       },
       success: function(response){
         // console.log(response);
@@ -92,3 +91,32 @@ $(document).on('submit', '.ajax_form_submit', function(event){
     });
     
 });
+
+// Works for delete crud operation
+function deleteOperation(ele){
+  var recordId = $(ele).data('id');
+  var deleteUrl = $(ele).data('url');
+  var confirmMessage = $(ele).data('msg');
+  var confirmation = confirm(confirmMessage);
+  if(confirmation){
+    $.ajax({
+        type: 'GET',
+        url: deleteUrl,
+        data: "recordId="+recordId,
+        beforeSend: function(){
+          $(ele).html($(ele).text()+'<i class="fa fa-spinner fa-spin ml-1"></i>');
+        },
+        success: function(response){
+          response = JSON.parse(response);
+          alert(response.message);
+          window.location.href = response.reloadUrl;
+        },
+        error: function(response){
+          response = JSON.parse(response);
+          alert("Oops please try after some time!");
+          window.location.href = response.reloadUrl;
+        }
+      });
+  }
+}
+
