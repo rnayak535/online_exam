@@ -147,9 +147,8 @@ class admin extends Controller
 //    Manage student section
    public function manageStudents(){
         $oApp_exam_master = app_exam_master::where('status', '1')->get()->toArray();
-        $oapp_student = app_student::where('status', '1')->get()->toArray();
         $data["exams"] = $oApp_exam_master;
-        $data["studentlist"] = $oapp_student;
+        $data["studentlist"] = app_student::select(['app_students.*','app_exam_masters.title as exam_name','app_exam_masters.exam_date'])->join('app_exam_masters','app_students.exam','=','app_exam_masters.id')->get()->toArray();
         return view('admin.manageStudent', $data);
    }
 

@@ -50,14 +50,18 @@
                     </thead>
                     
                     <tbody>
-                        <td>#</td>
-                        <td>Name</td>
-                        <td>DOB</td>
-                        <td>Exam</td>
-                        <td>Exam Date</td>
+                    @foreach($studentlist as $key=>$singleStudent)
+                      <tr>
+                        <td>{{ $key+1 }}</td>
+                        <td>{{ $singleStudent["name"] }}</td>
+                        <td>{{ date('jS, F Y', strtotime($singleStudent["dob"])) }}</td>
+                        <td>{{ $singleStudent["exam_name"] }}</td>
+                        <td>{{ date('jS, F Y', strtotime($singleStudent["exam_date"])) }}</td>
                         <td>Result</td>
-                        <td>Status</td>
+                        <td><input type="checkbox" name="form-control" name="status" {{ ($singleStudent['status']=='1')?'checked':'' }}></td>
                         <td>Action</td>
+                      </tr>
+                    @endforeach
                     </tbody>
                     <tfoot>
                       <tr>
