@@ -58,7 +58,7 @@
                         <td>{{ $singleStudent["exam_name"] }}</td>
                         <td>{{ date('jS, F Y', strtotime($singleStudent["exam_date"])) }}</td>
                         <td>N/A</td>
-                        <td><input type="checkbox" name="form-control" name="status" {{ ($singleStudent['status']=='1')?'checked':'' }}></td>
+                        <td><input type="checkbox" name="form-control" name="status" <?=($singleStudent['status']=='1')?'checked':'';?>  onclick="changeStudentStatus('{{ $singleStudent['id'] }}')"></td>
                         <td>
                           <a href="javascript:void(0);" class="btn btn-warning" data-toggle="modal" data-target="#editStudent" onclick="getEditModal('{{ $singleStudent['id'] }}');">Edit</a>
                           <a href="javascript:void(0);" class="btn btn-danger" data-id="{{ $singleStudent['id'] }}" data-url="{{ url('admin/delete_student') }}" data-msg="Are you sure to delete this student!" onclick="deleteOperation(this);">Delete</a>
@@ -163,7 +163,22 @@
 <script>
 
     function changeStudentStatus(studentId){
-        alert(studentId);
+         //BASE_URL is defined in master.blade.php
+        $.ajax({
+            type: 'GET',
+            url: BASE_URL+"/admin/change_student_status",
+            data: "studentId="+studentId,
+            beforeSend: function(){
+                
+            },
+            success: function(response){
+                alert("Status Changed Successfully.");
+            },
+            error: function(response){
+                alert("Oops please try after some time!");
+                window.location.href = "{{ url('admin/manage_students') }}";
+            }
+        });
     }
 
     function getEditModal(studentId){
