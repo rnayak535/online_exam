@@ -171,7 +171,7 @@ class admin extends Controller
        echo json_encode($array);
    }
 
-   function deleteStudent(Request $request){
+   public function deleteStudent(Request $request){
         $oapp_student = app_student::where('id', $request->recordId)->get()->first();
         if($oapp_student->status == '1'){
             $status = 0;
@@ -184,7 +184,7 @@ class admin extends Controller
         echo json_encode($array);
    }
 
-   function getStudent(Request $request){
+   public function getStudent(Request $request){
 
         $oApp_exam_master = app_exam_master::where('status', '1')->get()->toArray();
         $data["exams"] = $oApp_exam_master;
@@ -202,5 +202,25 @@ class admin extends Controller
         }
         $oapp_student->status = $status;
         $oapp_student->update();
+   }
+
+   public function editStudent(Request $request){
+        $validator = Validator::make($request->all(), ['name'=>'required','email'=>'required','mobile_no'=>'required','dob'=>'required','exam'=>'required']);
+        if($validator->passes()){
+            $oapp_student = app_student::where('id', $request->studentId)->get()->first();
+            $oapp_student->name = $request->name;
+            $oapp_student->email = $request->email;
+            $oapp_student->mobile_no = $request->mobile_no;
+            $oapp_student->dob = $request->dob;
+            $oapp_student->exam = $request->exam;
+            if(!empty(trim($request->password))){
+                $oapp_student->password = Hash::make($request->password);
+            }
+            $oapp_student->update();
+            $array = array('status'=>'true', 'message'=>'Student information updated successfully', 'reloadUrl'=>url('admin/manage_students')); 
+        }else{
+            $array = array('status'=>'false', 'message'=>$validator->errors()->all(), 'reloadUrl'=>url('admin/manage_students'));
+        }
+        echo json_encode($array);
    }
 }

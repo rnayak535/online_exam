@@ -39,3 +39,4 @@ Route::post('/admin/add_new_student', [App\Http\Controllers\admin::class, 'addNe
 Route::get('/admin/delete_student', [App\Http\Controllers\admin::class, 'deleteStudent']);
 Route::get('/admin/get_student', [App\Http\Controllers\admin::class, 'getStudent']);
 Route::get('/admin/change_student_status', [App\Http\Controllers\admin::class, 'changeStudentStatus']);
+Route::post('/admin/edit_student', [App\Http\Controllers\admin::class, 'editStudent']);
