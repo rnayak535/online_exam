@@ -161,6 +161,11 @@
 
 <!-- Javascript -->
 <script>
+
+    function changeStudentStatus(studentId){
+        alert(studentId);
+    }
+
     function getEditModal(studentId){
        //BASE_URL is defined in master.blade.php
        $.ajax({

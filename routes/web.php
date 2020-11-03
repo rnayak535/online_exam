@@ -38,3 +38,4 @@ Route::get('/admin/manage_students', [App\Http\Controllers\admin::class, 'manage
 Route::post('/admin/add_new_student', [App\Http\Controllers\admin::class, 'addNewStudent']);
 Route::get('/admin/delete_student', [App\Http\Controllers\admin::class, 'deleteStudent']);
 Route::get('/admin/get_student', [App\Http\Controllers\admin::class, 'getStudent']);
+Route::get('/admin/change_student_status', [App\Http\Controllers\admin::class, 'changeStudentStatus']);

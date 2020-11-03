@@ -26,10 +26,11 @@
         </select>
     </div>
     <div class="form-group">
-        <label>Enter Password <span class="text-danger">*</span></label>
-        <input type="password" name="password" placeholder="Enter password" value="{{ $student->password }}" required="required" class="form-control">
+        <label>Enter New Password</label>
+        <input type="password" name="password" placeholder="Enter New Password" value="" class="form-control">
     </div>
     <div class="form-group">
+        <input type="hidden" name="studentId" value="{{ $student->id }}">
         <button type="submit" class="btn btn-primary">Add </button>
     </div>
 </form>

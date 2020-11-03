@@ -185,10 +185,22 @@ class admin extends Controller
    }
 
    function getStudent(Request $request){
+
         $oApp_exam_master = app_exam_master::where('status', '1')->get()->toArray();
         $data["exams"] = $oApp_exam_master;
         $oapp_student = app_student::where('id', $request->studentId)->get()->first();
         $data["student"] = $oapp_student;
         return view('admin.getStudentAjax', $data);
+   }
+
+   public function changeStudentStatus(Request $request){
+        $oapp_student = app_student::where('id', $request->studentId)->get()->first();
+        if($oapp_student->status == '1'){
+            $status = 0;
+        }else{
+            $status = 1;
+        }
+        $oapp_student->status = $status;
+        $oapp_student->update();
    }
 }
